@@ -12,6 +12,7 @@ tradeoffs, not measured results or a universal architecture.
 
 | You need to… | Skill | What you should get |
 |---|---|---|
+| Start a project or repair its development setup | [Project bootstrap](.agents/skills/project-bootstrap/SKILL.md) | Explicit environment boundaries, reusable setup commands and a verified first journey |
 | Decide purchase timing, trials and ownership | [Product decisions](.agents/skills/product-decisions/SKILL.md) | A decision record with alternatives, consequences and state transitions |
 | Choose login and prepare review access | [Identity and review access](.agents/skills/identity-and-review-access/SKILL.md) | A supported identity strategy and tested reviewer journey |
 | Stop retyping test credentials | [Test account automation](.agents/skills/test-account-automation/SKILL.md) | A persona registry/helper contract with checked secret handling |
@@ -28,6 +29,9 @@ tradeoffs, not measured results or a universal architecture.
 
 ## Example requests
 
+- “Bootstrap this native project around a first create/save/reopen journey.
+  Inspect what already works, separate local and real-service setup, and identify
+  product decisions that block account or purchase configuration.”
 - “Before implementing the paywall, compare asking for payment at onboarding,
   first export and a usage limit. Inspect existing decisions first; ask me only
   about unresolved product choices.”
