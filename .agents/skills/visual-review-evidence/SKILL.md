@@ -1,21 +1,47 @@
 ---
 name: visual-review-evidence
-description: Present native UI evidence as contact sheets, before/after captures or short actual recordings.
+description: Make reviewable contact sheets, before-and-after captures and short recordings from actual native journeys.
 license: CC0-1.0
 ---
 
-# Visual review evidence
+# Evidence a reviewer can compare
 
-- Use a labeled contact sheet for several screens, paired before/after captures
-  for a visible change, and a short actual recording for keyboard, navigation
-  or motion. Suggest the useful format once rather than repeatedly asking.
-- Match source/build, platform, fixture and state before pairing images. An old
-  capture or generated concept cannot substitute for missing runtime evidence.
-- Compose sheets without stretching or silently cropping originals. Keep labels
-  readable and originals available for detailed review.
-- Preserve an original recording when making a trimmed review copy. Spliced or
-  accelerated footage cannot support a latency claim; a frame strip cannot
-  prove motion or responsiveness.
-- Capture with synthetic content where possible. Check notifications and
-  background UI as well as app content before sharing proof.
-- A screenshot proves appearance, not durable state or authority.
+Use for multiple changed screens, a visual handoff or an explicit image/video
+request. One clear screenshot can be enough for a small change.
+
+## Choose the format for the claim
+
+| Claim | Useful presentation | Missing proof |
+|---|---|---|
+| Layout changed | Same-state before/after pair | Persistence or server authorization |
+| Several screens are consistent | Labeled contact sheet | Interaction between states |
+| Keyboard or navigation behaves correctly | Short actual recording | Every accessibility or provider path |
+| Design direction is proposed | Labeled concept/reference board | Runtime implementation |
+
+Match fixture, platform, role, appearance and relevant viewport before comparing.
+Name intentional differences instead of presenting them as regressions. A new
+image should not be compared with an old capture from a different state.
+
+## Keep the evidence faithful
+
+Use synthetic content. Inspect the entire frame for account details, notifications
+and background UI. Arrange contact sheets with readable state labels, preserved
+aspect ratios and available full-size originals. Avoid cropping out the keyboard,
+error, system inset or loading state that matters to the claim.
+
+For video, capture the actual action through its completion. Keep an original
+when trimming a review copy and label edits. Accelerated/spliced footage cannot
+support latency claims; a frame strip does not establish responsiveness.
+
+Example labels: “Before — editor, keyboard open, long draft” and “After — same
+fixture, Save visible”. Include source/build in the accompanying note rather than
+obscuring the screen with a large technical overlay.
+
+## Finish with an observation
+
+Return usable images/video and a short verdict: what changed, what was observed,
+what still fails, and what these artifacts cannot establish. A file existing is
+not proof that its labels are readable or its capture is the right screen.
+Keep selected evidence rather than every intermediate image or copied workspace.
+Sharing private captures or creating store marketing material is a separate
+purpose from a local engineering review.

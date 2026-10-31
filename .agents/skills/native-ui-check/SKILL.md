@@ -1,20 +1,60 @@
 ---
 name: native-ui-check
-description: Verify native layout, keyboard and navigation changes on rendered iOS or Android screens.
+description: Verify native layout, focus, keyboard and navigation changes with semantic interaction and rendered completion states.
 license: CC0-1.0
 ---
 
-# Native UI checks
+# Inspect the journey the customer actually uses
 
-- Compilation cannot verify layout. Inspect the affected rendered screen and
-  completion state rather than treating launch or install as UI success.
-- A headless test keyboard does not prove ordinary IME layout. For editor or
-  sign-in changes, open the normal keyboard and inspect focused fields, bottom
-  actions, scrolling and dismissal.
-- Refresh semantic references after navigation, dialogs or scrolling. A stale
-  accessibility node can address a previous screen; coordinate-only targets
-  are unsuitable for passwords or secure confirmation.
-- Activity recreation, process restart and account restoration exercise
-  different persistence boundaries. Choose the one the change actually claims.
-- Debug-only launch flags cannot prove release behavior. Use the relevant build
-  configuration when the claim depends on those flags or OS integration.
+Use when a change affects appearance or interaction. A successful build is useful
+preparation, not rendered proof.
+
+## Choose a reproducible starting state
+
+Name the screen, role, fixture, build mode and expected action/result. Use a mock
+fixture for app-owned layout; use real integration only when the claim involves
+it. Reuse the maintained device and hold its resource ownership during manual
+interaction as well as scripted steps.
+
+Select the smallest relevant state set: normal success plus the changed loading,
+empty, error, cancellation or partial state. Expand size, appearance and text
+scaling only where adaptation or evidence calls for it.
+
+## Use semantic actions and state waits
+
+Prefer stable accessibility IDs or roles. Distinguish an identifier from a visible
+label; a tool's `label` lookup does not necessarily match an app's accessibility
+identifier. Refresh references after navigation, dialogs and scrolling. Wait for
+the expected state with a deadline rather than adding long fixed settling delays.
+
+Save repeatable flows with semantic checkpoints. Screenshots are for appearance
+and diagnosis, not a reason to spend an agent turn after every known tap.
+If hierarchy inspection itself fails, classify an observation failure before
+assuming the tap failed. Sensitive input requires identified controls; leave
+secure OS confirmation manual if the tool cannot safely identify or operate it.
+
+## Check the states that fake success
+
+- **Keyboard:** open the ordinary keyboard, enter long text, scroll to the end,
+  reach primary actions, dismiss and reopen. A headless keyboard does not prove
+  normal IME occlusion or focus behavior.
+- **Persistence:** activity recreation, process restart and account restoration
+  are different tests. Pick the lifecycle boundary behind the claim.
+- **Build mode:** a DEBUG-only keep-awake or seed flag does not prove release
+  behavior. Verify the actual launch mechanism and installed configuration.
+- **Navigation:** cancel/back and interrupted save should leave the intended
+  screen and data state, not just avoid a crash.
+
+Example: for a Save button hidden by the keyboard, reproduce with a long draft,
+fix the inset/focus layout, then save and reopen. A screenshot of the empty editor
+with its keyboard closed does not cover the defect.
+
+Return selected captures with the source/build and state, observed interactions,
+completion state and any unverified boundary. Use `visual-review-evidence` if
+available for a larger contact sheet or recording; it is not required for one
+clear screenshot. Restore only settings changed by this run and close only owned
+sessions. Do not create another device to avoid a busy shared one.
+
+Keep credentials and authenticated session material out of saved flows and
+shared captures. Use secret references resolved by a checked helper, not literal
+passwords embedded in a replay; otherwise leave secure entry manual.

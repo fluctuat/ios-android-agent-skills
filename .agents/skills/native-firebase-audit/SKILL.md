@@ -1,34 +1,67 @@
 ---
 name: native-firebase-audit
-description: Audit native and Firebase release claims for gaps between source, runtime and distribution evidence.
+description: Audit native and Firebase journeys for gaps between intended behavior, source, runtime and release evidence.
 license: CC0-1.0
 ---
 
-# Native and Firebase audit
+# Audit vertical journeys, not a collection of green indicators
 
-Focus on claims that routinely survive a superficial review:
+Use for a substantial product or release audit. An ordinary screen fix needs its
+focused check, not this whole review. Audit produces findings; repair work depends
+on the user's requested scope.
 
-- A native screen may still call a stub even when it resembles the other
-  platform. Trace the actual service and durable effect before calling parity.
-- Successful authentication may stop before account setup or the stable expected
-  landing screen. Test cancellation and restoration when they affect that path.
-- Late callbacks after an account switch and stale-client writes can invalidate
-  an otherwise successful single-account flow. Include them where state is shared.
-- An empty or failed fetch must not be mistaken for authoritative empty data.
-  Inspect whether recovery overwrites durable state or triggers fresh setup.
-- String limits measured as characters, grapheme clusters, UTF-16 units and
-  bytes can disagree across native clients and server validation.
-- A completed download is distinct from partial readiness. Verify offline
-  reopen rather than relying only on a success marker or cached screen.
-- Release configuration can differ from debug source. Inspect the candidate's
-  packaged inputs for claims about signing, flags or service selection.
-- Upload acceptance, tester availability, review submission, approval and public
-  visibility are different distribution states; use the relevant readback.
-- Store policy findings need the current official rule and applicable exception.
-  Optional UX preferences and inaccessible evidence are not confirmed defects.
-- Provider request flags do not establish contractual retention guarantees.
-  Match the actual data sent and project eligibility to the promised policy.
-- Budget alerts are not enforced spending caps. When enforcing a spending
-  ceiling, account for concurrent requests, retries and uncertain billing
-  outcomes before admitting more work; successful-response totals alone can
-  undercount spend.
+## Build the smallest useful map
+
+Identify requested revision/dirty changes, intended journeys, supported clients,
+roles, backend environments and the release candidate if relevant. Existing
+product decisions constrain the audit; optional redesign is not a defect.
+
+For each critical journey follow:
+`entry → action → authorization → durable effect → visible result → retry/reopen`.
+Select representative failure paths where the contract has meaningful risk.
+
+## Look for false completeness
+
+| Area | Easy claim | Stronger check |
+|---|---|---|
+| Platform parity | Screens look alike | Same fixture produces the intended service and persisted effects |
+| Login | Provider authenticated | Setup/restoration reaches stable expected landing |
+| Shared state | One save passed | Late fetch, stale device and account switch preserve the intended owner/state |
+| Downloads | Success marker displayed | Required assets reopen without network; partial readiness remains distinct |
+| Purchases | Checkout dismissed | Verification, binding, useful paid action and recovery all observed |
+| Release | Debug checks passed | Packaged configuration and exact candidate match the claim |
+| Distribution | Upload accepted | Correct audience can access the intended build |
+
+Check string limits across characters, graphemes, UTF-16 units and bytes when
+clients share a validation contract. Inspect whether failed fetches are treated
+as authoritative empty state and can erase or reinitialize data.
+
+## Inspect cost and privacy as implemented contracts
+
+Trace the actual categories of data sent to a provider and their retention
+promises. A request flag alone does not establish contractual retention. If a
+spending ceiling is promised, account for concurrency, retries and uncertain
+billing outcomes before admitting more work. Budget alerts alone do not enforce
+that ceiling. Avoid inventing disclosure answers or changing budgets in an audit.
+
+## Turn observations into findings
+
+Each finding needs trigger, user impact, exact source/runtime evidence,
+confidence, smallest correction and a check that could detect the failure.
+A confirmed source defect can be reported without runtime reproduction; label
+that limit. Missing access is an unverified check, not proof of a vulnerability.
+Store-policy findings require current official requirements and exception analysis.
+
+Keep a short coverage ledger: verified, issue found, not applicable with reason,
+or unverified with the missing observation. Do not turn one unavailable environment
+into dozens of speculative defects, or promise readiness because it found none.
+
+For example: “After switching accounts while a fetch is in flight, the prior
+account's response can replace the current screen state; callback ownership is
+not checked. Add an account-generation fence and a delayed-response test.” Use
+actual source evidence when applying this pattern; the example is hypothetical.
+
+Prioritize data loss, access/ownership, charged-without-access and blocked core
+journeys over cosmetic differences. End with findings and the smallest remaining
+checks in dependency order. Use the relevant focused skills when installed; this
+skill does not require installing another collection or running every lane.
