@@ -42,8 +42,10 @@ on a spinner alone.
 
 ## Repair the failed boundary
 
-After a mutation timeout, inspect durable state before retrying. Recover a device
-connection at the device boundary rather than redeploying healthy services.
+After a timeout or partial save, read back what persisted before retrying. If
+recording generation succeeded and caption alignment failed, reuse the saved
+audio and check that recovery makes no second generation request. A lost device
+connection can be recovered independently of a healthy backend.
 Keep temporary instrumentation narrow and avoid private payloads in logs.
 
 Once repairs are authorized, change the proven cause and verify both the failing

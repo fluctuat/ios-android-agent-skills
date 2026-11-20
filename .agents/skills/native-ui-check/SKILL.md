@@ -42,8 +42,9 @@ secure OS confirmation manual if the tool cannot safely identify or operate it.
   are different tests. Pick the lifecycle boundary behind the claim.
 - **Build mode:** a DEBUG-only keep-awake or seed flag does not prove release
   behavior. Verify the actual launch mechanism and installed configuration.
-- **Navigation:** cancel/back and interrupted save should leave the intended
-  screen and data state, not just avoid a crash.
+- **Navigation:** try Back or Close on an untouched editor and after an unsaved
+  edit. Check the destination in each case. If the user can cancel a discard,
+  verify the typed value survives. After a discard or interrupted save, reopen the record to check what persisted.
 
 Example: for a Save button hidden by the keyboard, reproduce with a long draft,
 fix the inset/focus layout, then save and reopen. A screenshot of the empty editor

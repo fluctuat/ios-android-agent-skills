@@ -46,15 +46,24 @@ Examples:
 
 ## Make the execution cheap
 
-Use existing selectors and batch related tests into one build. Fail on an unknown
-selector or zero executed required tests. Reuse named devices, prepared datasets,
-valid signed-in sessions and maintained caches. A busy device requires ownership
-coordination, not another permanent emulator.
+Move combinations such as plan eligibility and retry counts into tests of the
+production logic. Advance an injected clock through retries. Keep a rendered
+journey for each distinct interaction you need to prove, such as cancelling
+checkout or recovering a failed save. Before retiring a slow case, identify
+how existing or replacement coverage catches its regression, or why the
+product no longer supports that path.
 
-Save a repeatable semantic flow when it will be run again. Batch known actions
-with state checkpoints rather than making an agent turn for every tap. Keep
-bounded state waits; long fixed sleeps hide both fast paths and real failures.
-Track build/install, runner attachment, replay and human time separately.
+Build once for compatible test destinations. Reuse available devices, build
+caches, fixtures and signed-in sessions. Coordinate access to a busy device.
+If a large suite still dominates wall time, split independent cases across
+isolated workers and measure where adding a worker stops helping. Fail on an
+unknown selector, an empty selection or a missing required case. Compare the
+actual outcomes before and after tuning.
+
+Replay repeatable flows with semantic checkpoints. Check whether the next state
+is already present before polling and use a deadline for valid alternatives.
+Capture screens on failure or when appearance is the evidence. Time build and
+install, runner startup and test execution separately from human confirmation.
 
 ## Stop based on evidence
 

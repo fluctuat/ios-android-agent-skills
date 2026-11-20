@@ -19,19 +19,19 @@ tradeoffs, not measured results or a universal architecture.
 | Set up or qualify purchase testing | [Store purchase check](.agents/skills/store-purchase-check/SKILL.md) | An explicit lane, account pairing and fulfillment evidence |
 | Keep new screens consistent | [Reference-led design](.agents/skills/reference-led-design/SKILL.md) | A screen contract grounded in actual components and references |
 | Diagnose slowness or compare performance | [Native performance check](.agents/skills/native-performance-check/SKILL.md) | Comparable measurements and a demonstrated or inconclusive result |
-| Choose what to test and what to skip | [Validation planning](.agents/skills/validation-planning/SKILL.md) | The smallest sufficient checks and their proof limits |
+| Speed up regression tests or choose what to run | [Validation planning](.agents/skills/validation-planning/SKILL.md) | Faster feedback with the same protected outcomes |
 | Protect a regression | [Behavior TDD](.agents/skills/behavior-tdd/SKILL.md) | A test that detects the actual failure |
 | Locate a layered failure | [Boundary debugging](.agents/skills/boundary-debugging/SKILL.md) | A discriminating observation rather than another blind retry |
-| Change backend contracts | [Firebase change](.agents/skills/firebase-change/SKILL.md) | Compatibility, concurrency and deployment-scope evidence |
+| Change a backend contract or speed up a Functions deploy | [Firebase change](.agents/skills/firebase-change/SKILL.md) | A compatible rollout with fewer CLI calls and verified targets |
 | Verify a screen or interaction | [Native UI check](.agents/skills/native-ui-check/SKILL.md) | Rendered proof with the relevant keyboard/lifecycle state |
 | Make UI evidence easy to review | [Visual review evidence](.agents/skills/visual-review-evidence/SKILL.md) | Faithful before/after images, sheets or recordings |
 | Audit a product or candidate | [Native Firebase audit](.agents/skills/native-firebase-audit/SKILL.md) | Prioritized findings and a bounded coverage ledger |
 
 ## Example requests
 
-- “Bootstrap this native project around a first create/save/reopen journey.
-  Inspect what already works, separate local and real-service setup, and identify
-  product decisions that block account or purchase configuration.”
+- “Use project-bootstrap to get our notes app running on iOS and Android. A
+  guest should be able to write a note, close the app and continue editing it
+  tomorrow. Show me the commands to run that journey again.”
 - “Before implementing the paywall, compare asking for payment at onboarding,
   first export and a usage limit. Inspect existing decisions first; ask me only
   about unresolved product choices.”
@@ -53,8 +53,10 @@ LICENSE
 ```
 
 Copy the selected skill folder, including its references, to your agent's
-supported skill location. `.agents/skills/` is this collection's canonical home;
-use your agent's documented discovery mechanism or a symlink where appropriate.
+supported skill location. Codex uses `.agents/skills/` and Claude Code uses
+`.claude/skills/`. For projects using both, keep each folder in `.agents/skills/`
+and symlink it into `.claude/skills/`.
+[Codex skill locations](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills) · [Claude Code skills](https://code.claude.com/docs/en/skills)
 Merge relevant `AGENTS.md` guidance into your project's agreement. Individual
 skills work without installing the others; optional cross-references help you
 continue when the task crosses boundaries.

@@ -50,15 +50,26 @@ assuming last-write-wins is harmless.
 
 ## Determine the real deployment scope
 
-Follow shared imports, module initialization, generated inputs, dependencies and
-runtime configuration. One edited file can affect several Functions; a full deploy
-can overwrite unrelated configuration. Different selectively deployed revisions
-can be valid, while equal source labels do not prove equal runtime settings.
+For a code-only fix, use the release diff to find affected Functions, then
+compare their runtime inputs with each Function's own deployed revision.
+Include shared routers, imports, initialization, generated assets and dependency
+changes. Print the target list and why each is included. Unrelated revision
+labels can differ. If the scope is uncertain or a trigger or migration changes,
+use the owning rollout procedure. A missing deploy tool never expands scope.
 
-For an authorized deployment, one owner holds its inputs from preflight through
-readback. Record selected targets, intended configuration, rollback and the
-compatible client set. After an ambiguous timeout inspect remote state before
-retrying. Do not broaden targets because a guarded runner is unavailable.
+Group selected Functions with compatible effective settings in rollout order.
+For example, deploy an updated reader before a writer that emits the new format.
+Within each stage, batch independent targets into scoped CLI calls sized for
+that environment's quotas. A guarded deploy already runs its preflight for
+that batch. Keep each Function's intended settings intact. For a broad rollout,
+verify a representative first group before releasing the rest. [Firebase deployment guidance](https://firebase.google.com/docs/functions/manage-functions#deploy_functions)
+
+For an authorized deploy, one owner holds the inputs through verification.
+Record the target set, rollback and supported clients. Wait for a required
+Firestore index to become ready before activating its query. After a partial
+run, read back each target's active revision and settings and retry only the
+unfinished targets while the plan's inputs still match. Compare elapsed time,
+CLI calls and verified targets across equivalent rollouts.
 
 Return: changed contract, supported-client evidence, local behavior checks,
 authorized runtime readback if performed, and any pending activation step.

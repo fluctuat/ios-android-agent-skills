@@ -162,10 +162,14 @@ profiling remains unperformed. `native-performance-check` covers that work.
 
 ## Finish with one proved journey and explicit gaps
 
-Choose a first slice that exercises real user value, such as create a draft,
-save, terminate/reopen and continue editing. Add the real signed-in/backend path
-when it is in scope; a mock success cannot stand in for it. Verify recovery or
-denial at the boundary the slice actually crosses.
+From an ordinary launch on each requested platform, navigate to the first
+useful action with the intended feature defaults. A test shortcut can open an
+editor that users cannot reach. For a draft app, save, terminate, reopen and
+continue editing. If sync is part of the promise, use a second client. For a
+cross-platform app, create on Android, edit on iOS, then refresh Android and
+check for text it has never cached. A single-platform app can use two devices.
+Pass opaque record IDs back exactly as received, including case. For private
+data, check an unrelated user's denial through the same client path.
 
 Report each required capability as **configured**, **verified**, **blocked** or
 **not performed**, with the command/artifact and its limit. “Configured” means
